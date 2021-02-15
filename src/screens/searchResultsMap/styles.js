@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%'
     },
+
+    items: {
+        position: 'absolute',
+        bottom: 6,
+        marginLeft: 5
+    }
 })
 
 export default styles;
