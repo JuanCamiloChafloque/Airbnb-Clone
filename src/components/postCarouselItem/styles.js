@@ -4,14 +4,23 @@ const styles = StyleSheet.create({
 
     container: {
         height: 120,
-        padding: 5
+        padding: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 5
+        },
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
+        elevation: 10
     },
 
     innerContainer: {
         flexDirection: 'row',
         backgroundColor: 'white',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        margin: 4
     },
 
     image: {
@@ -26,12 +35,11 @@ const styles = StyleSheet.create({
     },
 
     description: {
-        fontSize: 18,
-        lineHeight: 26
+        fontSize: 14,
     },
 
     newPrice: {
-        fontSize: 18,
+        fontSize: 15,
         marginVertical: 10,
         fontWeight: 'bold'
     }
