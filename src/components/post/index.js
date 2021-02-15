@@ -1,32 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
 
-class Post extends Component {
-    constructor(props) {
-        super(props);
-        this.post = props.post;
-        this.state = {
-        };
+const Post = (props) => {
+
+    const post = props.post;
+    const navigation = useNavigation();
+
+    const goToPostPage = () => {
+        navigation.navigate('Post', { postId: post.id });
     }
 
-    render() {
+    return (
+        <Pressable onPress={goToPostPage} style={styles.container}>
 
-        return (
-            <View style={styles.container}>
-
-                <Image style={styles.image} source={{ uri: this.post.image }} />
-                <Text style={styles.bedrooms}>{this.post.bed} bed {this.post.bedroom} bedrooms</Text>
-                <Text style={styles.description} numberOfLines={2} >{this.post.type}. {this.post.title}</Text>
-                <Text style={styles.prices}>
-                    <Text style={styles.oldPrice}>${this.post.oldPrice}</Text>
-                    <Text style={styles.newPrice}>  ${this.post.newPrice}</Text>
+            <Image style={styles.image} source={{ uri: post.image }} />
+            <Text style={styles.bedrooms}>{post.bed} bed {post.bedroom} bedrooms</Text>
+            <Text style={styles.description} numberOfLines={2} >{post.type}. {post.title}</Text>
+            <Text style={styles.prices}>
+                <Text style={styles.oldPrice}>${post.oldPrice}</Text>
+                <Text style={styles.newPrice}>  ${post.newPrice}</Text>
                     / night
                 </Text>
-                <Text style={styles.totalPrice}>${this.post.totalPrice} total</Text>
-            </View>
-        );
-    }
+            <Text style={styles.totalPrice}>${post.totalPrice} total</Text>
+        </Pressable>
+    );
 }
 
 export default Post;

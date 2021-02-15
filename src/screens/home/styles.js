@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     image: {
         width: '100%',
-        height: 500,
+        height: '100%',
         resizeMode: 'cover',
         justifyContent: 'center',
     },
