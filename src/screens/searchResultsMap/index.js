@@ -6,10 +6,14 @@ import places from '../../../assets/data/feed';
 import CustomMarker from '../../components/customMarker';
 import PostCarouselItem from '../../components/postCarouselItem';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
+import { listPosts } from '../../graphql/queries';
+import { API, graphqlOperation } from 'aws-amplify';
+
 
 const SearchResultsMapScreen = (props) => {
 
     const [selectedPlaceId, setSelectedPlaceId] = useState(null);
+    const [posts, setPosts] = useState([]);
     const width = useWindowDimensions().width;
     const refFlatList = useRef(null);
     const viewConfig = useRef({ itemVisiblePercentThreshold: 70 });
@@ -25,12 +29,12 @@ const SearchResultsMapScreen = (props) => {
         if (!selectedPlaceId || !refFlatList) {
             return;
         }
-        const index = places.findIndex(place => place.id === selectedPlaceId);
+        const index = posts.findIndex(place => place.id === selectedPlaceId);
         refFlatList.current.scrollToIndex({ index });
-        const selectedPlace = places[index];
+        const selectedPlace = posts[index];
         const region = {
-            latitude: selectedPlace.coordinate.latitude,
-            longitude: selectedPlace.coordinate.longitude,
+            latitude: selectedPlace.latitude,
+            longitude: selectedPlace.longitude,
             latitudeDelta: 0.8,
             longitudeDelta: 0.8
         }
@@ -39,6 +43,24 @@ const SearchResultsMapScreen = (props) => {
 
 
     }, [selectedPlaceId])
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const postsResult = await API.graphql(
+                    graphqlOperation(listPosts)
+                )
+                setPosts(postsResult.data.listPosts.items);
+                console.log(postsResult);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        fetchPosts();
+    }, [])
+
+
 
     return (
         <View style={styles.container} >
@@ -51,10 +73,10 @@ const SearchResultsMapScreen = (props) => {
                     latitudeDelta: 0.8,
                     longitudeDelta: 0.8
                 }}>
-                {places.map(place => (
+                {posts.map(place => (
                     <CustomMarker
                         isSelected={place.id === selectedPlaceId}
-                        coordinate={place.coordinate}
+                        coordinate={{ latitude: place.latitude, longitude: place.longitude }}
                         price={place.newPrice}
                         onPress={() => setSelectedPlaceId(place.id)}
                     />)
@@ -64,7 +86,7 @@ const SearchResultsMapScreen = (props) => {
             <View style={styles.items}>
                 <FlatList
                     ref={refFlatList}
-                    data={places}
+                    data={posts}
                     renderItem={({ item }) => <PostCarouselItem post={item} />}
                     horizontal
                     showsHorizontalScrollIndicator={false}
