@@ -1,1 +1,10 @@
-{}
+{
+  "auth": {
+    "airbnb3732850a": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
