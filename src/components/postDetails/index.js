@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import styles from './styles';
 
+const days = 7;
+
 const Post = (props) => {
 
     const post = props.post;
@@ -18,7 +20,7 @@ const Post = (props) => {
                     <Text style={styles.newPrice}>  ${post.newPrice}</Text>
                     / night
                 </Text>
-                <Text style={styles.totalPrice}>${post.totalPrice} total</Text>
+                <Text style={styles.totalPrice}>${post.newPrice * days} total</Text>
                 <Text style={styles.longDescription}>{post.description}</Text>
             </View>
         </ScrollView>

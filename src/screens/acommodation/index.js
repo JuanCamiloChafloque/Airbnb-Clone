@@ -8,10 +8,10 @@ import { useRoute } from '@react-navigation/native';
 const AcommodationScreen = (props) => {
 
     const route = useRoute();
-    const post = places.find(place => place.id === route.params.postId);
+    const post = route.params.post;
 
     return (
-        <View style={{ backgroundColor: 'white' }}>
+        <View style={{ height: '100%', backgroundColor: 'white' }}>
             <Post post={post} />
         </View>
     )
