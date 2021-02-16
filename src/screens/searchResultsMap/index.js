@@ -12,6 +12,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 
 const SearchResultsMapScreen = (props) => {
 
+    const { guests } = props;
+
     const [selectedPlaceId, setSelectedPlaceId] = useState(null);
     const [posts, setPosts] = useState([]);
     const width = useWindowDimensions().width;
@@ -48,7 +50,13 @@ const SearchResultsMapScreen = (props) => {
         const fetchPosts = async () => {
             try {
                 const postsResult = await API.graphql(
-                    graphqlOperation(listPosts)
+                    graphqlOperation(listPosts, {
+                        filter: {
+                            maxGuests: {
+                                ge: guests,
+                            }
+                        }
+                    })
                 )
                 setPosts(postsResult.data.listPosts.items);
                 console.log(postsResult);

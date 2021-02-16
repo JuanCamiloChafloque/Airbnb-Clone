@@ -52,7 +52,10 @@ const GuestsScreen = (props) => {
                 <Pressable style={styles.buttonContinue} onPress={() => navigation.navigate("Home", {
                     screen: "Explore",
                     params: {
-                        screen: "Search Results"
+                        screen: "Search Results",
+                        params: {
+                            guests: adults + children
+                        }
                     }
                 })}>
                     <Text style={styles.textContinue}>Search</Text>

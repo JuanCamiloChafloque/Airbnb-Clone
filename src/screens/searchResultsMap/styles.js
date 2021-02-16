@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
     items: {
         position: 'absolute',
-        bottom: 6,
+        bottom: 5,
         marginLeft: 5
     }
 })
