@@ -12,7 +12,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 
 const SearchResultsMapScreen = (props) => {
 
-    const { guests } = props;
+    const { guests, viewport } = props;
 
     const [selectedPlaceId, setSelectedPlaceId] = useState(null);
     const [posts, setPosts] = useState([]);
@@ -52,8 +52,16 @@ const SearchResultsMapScreen = (props) => {
                 const postsResult = await API.graphql(
                     graphqlOperation(listPosts, {
                         filter: {
-                            maxGuests: {
-                                ge: guests,
+                            and: {
+                                maxGuests: {
+                                    ge: guests
+                                },
+                                latitude: {
+                                    between: [viewport.southwest.lat, viewport.northeast.lat]
+                                },
+                                longitude: {
+                                    between: [viewport.southwest.lng, viewport.northeast.lng]
+                                }
                             }
                         }
                     })

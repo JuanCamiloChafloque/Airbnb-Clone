@@ -16,7 +16,9 @@ const DestinationSeachScreen = (props) => {
             <GooglePlacesAutocomplete
                 placeholder={"Where are you going?"}
                 onPress={(data, details = null) => {
-                    navigation.navigate('Guests');
+                    navigation.navigate('Guests', {
+                        viewport: details.geometry.viewport
+                    });
                 }}
                 query={{
                     key: 'AIzaSyDh_w5C7HrQ3fja3RhLPuVgEAsZxhjYSG8',
